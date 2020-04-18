@@ -60,6 +60,8 @@ enum
 };
 
 #define TIME_HAS_ELAPSED(now_, stamp_, period_) ((now_) - (stamp_) >= (period_)) // this will account for overflow
+// warning: large constant values for time comparisons must be post-fixed by "UL" to cast into 32-bit, or else the comparison will not be done correctly
+#define ONE_HOUR_MILLIS (60UL * 60UL * 1000UL)
 
 // MPR sensor state machine phases
 enum

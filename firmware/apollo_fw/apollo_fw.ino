@@ -10,6 +10,8 @@ bool run;                           // whether or not to run the valve state-mac
 bool run_heartbeat;                 // whether or not to run the heartbeat LEDs
 uint32_t debug_timestamp = 0;       // last time the debug output has been written
 uint32_t current_faults = FAULTCODE_NONE; // all currently active faults as bit flags
+uint32_t odo_timestamp = 0;         // last millis cnt of the hour
+uint32_t loop_cnt = 0;              // number of times the main loop has executed
 
 void setup()
 {
@@ -85,7 +87,11 @@ void loop()
 	if (nvm.debug_mode != false && TIME_HAS_ELAPSED(now, debug_timestamp, 1000))
 	{
 		debug_timestamp = now;
-		Serial.print(F("dbg[")); Serial.print(now, DEC); Serial.print(F(", ")); Serial.print(nvm.odometer_hours, DEC); Serial.print(F("]: "));
+		Serial.print(F("dbg[")); Serial.print(now / 1000, DEC);
+		Serial.print(F(", ")); Serial.print(loop_cnt, DEC);
+		Serial.print(F(", ")); Serial.print(odo_timestamp, DEC);
+		Serial.print(F(", ")); Serial.print(nvm.odometer_hours, DEC);
+		Serial.print(F("]: "));
 		Serial.print(F("phase: "));
 		Serial.print(valve_phase);
 		Serial.print(F("; "));
@@ -314,16 +320,16 @@ void valves_init()
 	#endif
 }
 
-uint32_t odo_timestamp = 0;
-
 void odo_task()
 {
+	loop_cnt++;
 	// if an hour has passed, increase the odometer and save it
-	if (TIME_HAS_ELAPSED(now, odo_timestamp, 60 * 60 * 1000))
+	if (TIME_HAS_ELAPSED(now, odo_timestamp, ONE_HOUR_MILLIS))
 	{
-		odo_timestamp = now;
+		odo_timestamp += ONE_HOUR_MILLIS;
 		nvm.odometer_hours++;
 		nvm_write(&nvm);
+		if (nvm.debug_mode) { Serial.print(F("odo ++ ")); Serial.println(nvm.odometer_hours, DEC); }
 	}
 }
 
