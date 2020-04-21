@@ -255,6 +255,7 @@ void faults_beep()
 	{
 		// down edge, remember when
 		btn_timestamp = now;
+		if (nvm.debug_mode) { Serial.println(F("button press")); }
 	}
 	else if (btn_prev == LOW && btn == LOW)
 	{
@@ -266,15 +267,24 @@ void faults_beep()
 				// force silence
 				if (silence_latch == false)
 				{
-					buzzer_silent = true;
 					silence_latch = true;
-					#ifdef USE_PRESSURE_SENSOR
-					if ((current_faults & FAULTCODE_PRESSURE_HW_FAIL) != 0) {
-						pressure_init(); // this attempts to reinitialize the pressure sensor(s)
+					if (buzzer_silent == false)
+					{
+						buzzer_silent = true;
+						#ifdef USE_PRESSURE_SENSOR
+						if ((current_faults & FAULTCODE_PRESSURE_HW_FAIL) != 0) {
+							pressure_init(); // this attempts to reinitialize the pressure sensor(s)
+						}
+						#endif
+						digitalWrite(PIN_BUZZER, LOW);
+						if (nvm.debug_mode) { Serial.println(F("alarm silenced")); }
 					}
-					#endif
+					else
+					{
+						buzzer_silent = false;
+						if (nvm.debug_mode) { Serial.println(F("alarm reactivated")); }
+					}
 				}
-				digitalWrite(PIN_BUZZER, LOW);
 			}
 			else
 			{
@@ -293,4 +303,11 @@ void faults_beep()
 	}
 
 	btn_prev = btn; // remember for edge detect
+}
+
+void faults_beepRestart()
+{
+	buzzer_silent = false;
+	silence_latch = false;
+	btn_timestamp = 0;
 }

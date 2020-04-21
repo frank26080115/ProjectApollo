@@ -168,6 +168,10 @@ void cmd_execute(char* s)
 		digitalWrite(PIN_BUZZER, LOW);
 		Serial.println(F("buzzer off"));
 	}
+	else if (memcmp_PF((const void*)s, (uint_farptr_t)PSTR("buzz_cont"), pstart = 10) == 0) {
+		faults_beepRestart();
+		Serial.println(F("buzzer continue"));
+	}
 	else if (memcmp_PF((const void*)s, (uint_farptr_t)PSTR("readpins"), pstart = 9) == 0) {
 		Serial.println(F("pin states:"));
 		Serial.print(F("\t PIN_LED_RED    : ")); Serial.println(digitalRead(PIN_LED_RED    ));
