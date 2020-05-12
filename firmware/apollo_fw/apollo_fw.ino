@@ -264,7 +264,7 @@ void valve_check(uint8_t pin)
 		// the solenoid takes time to move, and then takes time for the back-EMF to dissipate
 		// we only check after the settle time
 
-		actual_pin_state = digitalRead(PIN_COILCHECK_5WAY) == LOW ? LOW : HIGH;
+		actual_pin_state = digitalRead(pin) == LOW ? LOW : HIGH;
 		// what we are checking depends on if the coil is ON or OFF
 		if (digitalRead((pin == PIN_COILCHECK_5WAY) ? PIN_COIL_5WAY : PIN_COIL_2WAY) != LOW)
 		{
