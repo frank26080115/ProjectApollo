@@ -19,11 +19,11 @@
 #define OXY_HW_TIMEOUT_SHORT   3000  // max time between oxygen sensor data packets
 
 #define PIN_12V_MONITOR    A3
-#define VMON_R1            10000 // resistor value for voltage divider
-#define VMON_R2            620   // resistor value for voltage divider
-#define VMON_THRESH_LOW    10000 // undervoltage limit in mV
-#define VMON_THRESH_HIGH   13000 // overvoltage  limit in mV
-#define VMON_THRESH_HYSTER 500   // hysteresis         in mV
+#define VMON_R1            10000UL // resistor value for voltage divider
+#define VMON_R2            620UL   // resistor value for voltage divider
+#define VMON_THRESH_LOW    10000   // undervoltage limit in mV
+#define VMON_THRESH_HIGH   13000   // overvoltage  limit in mV
+#define VMON_THRESH_HYSTER 500     // hysteresis         in mV
 
 #define PIN_COIL_5WAY      PIN_COIL_1
 #define PIN_COIL_2WAY      PIN_COIL_2

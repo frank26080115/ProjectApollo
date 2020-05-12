@@ -58,10 +58,10 @@ uint32_t adc_to_mv(uint16_t adc)
 	mv_input = (raw * 1100 * (r1 + r2)) / (1024 * r2)
 	*/
 	uint32_t r_sum = VMON_R1 + VMON_R2;
-	uint32_t denom = 1024 * VMON_R2;
-	x *= 110;
+	uint32_t denom = 1024UL * VMON_R2;
+	x *= 11UL;
 	x *= r_sum;
 	x /= denom;
-	x *= 10; // with the original equation, there's a 32-bit overflow problem, so we do the earlier math with smaller mutltiplication
+	x *= 100UL; // with the original equation, there's a 32-bit overflow problem, so we do the earlier math with smaller mutltiplication
 	return x;
 }
