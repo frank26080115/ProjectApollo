@@ -8,6 +8,8 @@
 #define PIN_BUTTON         11
 #define PIN_BUZZER         8
 
+#define BUZZER_AUTOMATIC // define if buzzer uses DC, undefine if buzzer uses AC
+
 #define PIN_COIL_1         4
 #define PIN_COIL_2         6
 #define PIN_COILCHECK_1    5

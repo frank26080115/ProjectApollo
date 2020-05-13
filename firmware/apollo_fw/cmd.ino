@@ -160,12 +160,12 @@ void cmd_execute(char* s)
 	}
 	else if (memcmp_PF((const void*)s, (uint_farptr_t)PSTR("buzz_on"), pstart = 8) == 0) {
 		run_heartbeat = false;
-		digitalWrite(PIN_BUZZER, HIGH);
+		tonegen_on();
 		Serial.println(F("buzzer on"));
 	}
 	else if (memcmp_PF((const void*)s, (uint_farptr_t)PSTR("buzz_off"), pstart = 9) == 0) {
 		run_heartbeat = false;
-		digitalWrite(PIN_BUZZER, LOW);
+		tonegen_off();
 		Serial.println(F("buzzer off"));
 	}
 	else if (memcmp_PF((const void*)s, (uint_farptr_t)PSTR("buzz_cont"), pstart = 10) == 0) {

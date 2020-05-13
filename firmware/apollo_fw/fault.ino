@@ -242,7 +242,7 @@ void faults_beep()
 		if (buzzer_silent == false)
 		{
 			// buzz if not forced silence
-			digitalWrite(PIN_BUZZER, HIGH);
+			tonegen_on();
 		}
 	}
 	else
@@ -276,7 +276,7 @@ void faults_beep()
 							pressure_init(); // this attempts to reinitialize the pressure sensor(s)
 						}
 						#endif
-						digitalWrite(PIN_BUZZER, LOW);
+						tonegen_off();
 						if (nvm.debug_mode) { Serial.println(F("alarm silenced")); }
 					}
 					else
@@ -289,7 +289,7 @@ void faults_beep()
 			else
 			{
 				// use the button as a buzzer testing button
-				digitalWrite(PIN_BUZZER, HIGH);
+				tonegen_on();
 			}
 		}
 	}
@@ -298,7 +298,7 @@ void faults_beep()
 		silence_latch = false;
 		if (need_buzz == false)
 		{
-			digitalWrite(PIN_BUZZER, LOW);
+			tonegen_off();
 		}
 	}
 
